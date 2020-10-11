@@ -10,7 +10,7 @@ contract('TestERC721Mintable', accounts => {
             this.contract = await ERC721MintableComplete.new({from: account_one});
 
             // TODO: mint multiple tokens
-            for(let i = 0 ; i< 10 ; i++){
+            for(let i = 5;i<15;i++){
                 await this.contract.mint(accounts[i],i,"mytoken");
             }
         })
@@ -21,7 +21,7 @@ contract('TestERC721Mintable', accounts => {
         })
 
         it('should get token balance', async function () { 
-            let balance = await this.contract.baalnceOf(accounts[5]);
+            let balance = await this.contract.balanceOf(accounts[5]);
             assert.equal(balance,1,"balance should return 1");
         })
 

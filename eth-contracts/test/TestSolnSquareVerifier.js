@@ -9,8 +9,8 @@
     const account_one = accounts[0];
     const account_two = accounts[1];
 
-    descripe("testing SolnSquareVerifier" , function() {
-        beforEach(async function (){
+    describe("testing SolnSquareVerifier" , function() {
+        beforeEach(async function (){
             VerifierContract =  await Verifier.new({from:account_one});
             this.contract = await SolnSquareVerifier.new(VerifierContract.address,{from:account_one});
         });
@@ -22,7 +22,11 @@
             let balance = await this.contract.balanceOf(accounts[5]);
             assert.equal(balance,5,"balance should return 1");
         })
-
+        it("Test if a new solution can be added for contract - SolnSquareVerifier"),async function(){
+            await this.contract.mint(accounts[1],1,"token");
+            let balance = await this.contract.balanceOf(accounts[1]);
+            assert.equal(balance,1,"balance should return 1");
+        }
         it("test if ERC721 token can be minted for contract - SolnSquareVerifier " , async function(){
             let CorrectProof = {
                 "A":["0x175e07b53d4b9b0f88b15f8dd066266f6d8aeac027789758bdfdf76c79121bb2", "0x154ec17488c8625a544afd3345dc192775b9d8043acd89c596a6faea02fc4314"],
@@ -38,7 +42,7 @@
                 "input":[9,1]
             }
             let tx = await this.contract.mintNFT(accounts[2],5,CorrectProof.A,CorrectProof.A_p,CorrectProof.B,CorrectProof.B_p,
-                CorrectProof.c,CorrectProof.C_p,CorrectProof.H,CorrectProof.K,CorrectProof.input);
+                CorrectProof.C,CorrectProof.C_p,CorrectProof.H,CorrectProof.K,CorrectProof.input);
                 assert.equal(tx.logs[1].event,'Transfer',"correct proof is not working");
         })
     });
