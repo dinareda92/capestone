@@ -10,8 +10,8 @@ contract('TestERC721Mintable', accounts => {
             this.contract = await ERC721MintableComplete.new({from: account_one});
 
             // TODO: mint multiple tokens
-            for(let i = 5;i<15;i++){
-                await this.contract.mint(accounts[i],i,"mytoken");
+            for(let i = 0;i<10;i++){
+                await this.contract.mint(accounts[i],i,"token");
             }
         })
 
@@ -34,7 +34,7 @@ contract('TestERC721Mintable', accounts => {
         it('should transfer token from one owner to another', async function () { 
             let tokenOwner = await this.contract.ownerOf(6);
             assert.equal(tokenOwner,accounts[6],"incorrect owner");
-            await this.transferFrom(accounts[6],accounts[7],6,{from:accounts[6]});
+            await this.contract.transferFrom(accounts[6],accounts[7],6,{from:accounts[6]});
             tokenOwner = await this.contract.ownerOf(7);
             assert.equal(tokenOwner,accounts[7],"incorrect owner");
         })
